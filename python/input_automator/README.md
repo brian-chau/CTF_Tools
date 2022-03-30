@@ -1,11 +1,11 @@
 # Source
-picoCTF "Binary Exploitation" category
+pwn.college
 
 # Challenge
-Guessing Game 1
-
-# Original Link
-https://play.picoctf.org/practice?category=6&originalEvent=3&page=1
+ia.py ==> Challenge 4.1
+just_input.py ==> Challenge 6.1
 
 # Description
-This Python script automates the input of an input application. For now, I tailored it to work with this specific application, but with a little massaging, it can work for others.
+These Python scripts automate the inputs of very specific applications.
+
+They are adjustable to fit whatever the needs are.
