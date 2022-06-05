@@ -1,5 +1,5 @@
 // Simulates the BASH command:
-//     /usr/bin/cat file.txt | /path/to/bin
+//     /usr/bin/cat arg1 | envVariable=value /path/to/bin arg2
 
 #include <sys/wait.h>
 #include <unistd.h>
@@ -27,12 +27,12 @@ int pwncollege(char *prod_app, char * cons_app, char** prod_args, char** cons_ar
 
 int main(int argc, char** argv) {
     char *prod_app    = "/usr/bin/cat";
-    char *prod_args[] = { prod_app, "uuwrolou", (char *) NULL };
+    char *prod_args[] = { prod_app, "arg1", (char *) NULL };
     char *prod_env[] = { (char*) NULL };
 
     char *cons_app    = "/challenge/embryoio_level32";
-    char *cons_args[] = { cons_app, "xmnocmwmow", (char *) NULL };
-    char *cons_env[] = { "tglarq=aoatbfyuqn", (char*) NULL };
+    char *cons_args[] = { cons_app, "arg2", (char *) NULL };
+    char *cons_env[] = { "envVariable=value", (char*) NULL };
 
     pwncollege(prod_app, cons_app, prod_args, cons_args, prod_env, cons_env);
     return 0;

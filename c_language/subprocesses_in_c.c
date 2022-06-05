@@ -1,3 +1,6 @@
+// Simulates the BASH command:
+//     /path/to/some/bin some_arg
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -15,17 +18,6 @@ int func() {
         execve(bin, myargs, myenv);
         perror("execve");
     }
-
-    int timeout = 10000;
-    int status;
-    while (0 == waitpid(mypid, &status, WNOHANG)) {
-        if ( --timeout < 0 ) {
-            perror("timeout");
-            return -1;
-        }
-        sleep(1);
-    }
-    exit(EXIT_FAILURE);
 }
 
 int main(){
