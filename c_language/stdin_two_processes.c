@@ -9,9 +9,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int pwncollege(char *appName, char **appArgs, char **appEnv, char *targetFileToRead) {
+int pwncollege(char *app, char **args, char **env, char *file) {
     pid_t pid;
-    int status, fd = open(targetFileToRead, O_RDONLY);
+    int status, fd = open(file, O_WRONLY);
     if (fd < 0) {
         perror("open");
         return EXIT_FAILURE;
@@ -21,9 +21,9 @@ int pwncollege(char *appName, char **appArgs, char **appEnv, char *targetFileToR
         perror("fork");
         return EXIT_FAILURE;
     } else if (!pid) { /* child */
-        dup2(fd, STDIN_FILENO);
+        dup2(fd, STDOUT_FILENO);
         close(fd);
-        execve(appName, appArgs, appEnv);
+        execve(app, args, env);
         perror("exec");
         return EXIT_FAILURE;
     } else { /* parent */
@@ -35,11 +35,11 @@ int pwncollege(char *appName, char **appArgs, char **appEnv, char *targetFileToR
 }
 
 int main(void) {
-    char *appName = "/path/to/some/bin";
-    char *appArgs[] = {appName, NULL};
-    char *appEnv[] = {NULL};
+    char *app = "/challenge/embryoio_level34";
+    char *args[] = {app, NULL};
+    char *env[] = {NULL};
 
-    char *targetFileToRead = "file_to_redirect_to_stdin.txt";
+    char *file = "test.c";
 
-    pwncollege(appName, appArgs, appEnv, targetFileToRead);
+    return pwncollege(app, args, env, file);
 }
