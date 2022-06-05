@@ -11,7 +11,7 @@
 
 int pwncollege(char *app, char **args, char **env, char *file) {
     pid_t pid;
-    int status, fd = open(file, O_WRONLY);
+    int status, fd = open(file, O_RDONLY);
     if (fd < 0) {
         perror("open");
         return EXIT_FAILURE;
@@ -21,7 +21,7 @@ int pwncollege(char *app, char **args, char **env, char *file) {
         perror("fork");
         return EXIT_FAILURE;
     } else if (!pid) { /* child */
-        dup2(fd, STDOUT_FILENO);
+        dup2(fd, STDIN_FILENO);
         close(fd);
         execve(app, args, env);
         perror("exec");
@@ -35,11 +35,11 @@ int pwncollege(char *app, char **args, char **env, char *file) {
 }
 
 int main(void) {
-    char *app = "/challenge/embryoio_level34";
+    char *app = "/challenge/embryoio_level33";
     char *args[] = {app, NULL};
     char *env[] = {NULL};
 
-    char *file = "test.c";
+    char *file = "/tmp/mgyklk";
 
     return pwncollege(app, args, env, file);
 }
